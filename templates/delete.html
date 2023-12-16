@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Delete Course
+{% endblock %}
+
+{% block main %}
+<form action="/delete" method="post">
+    <select class="session" name="course_Code">
+        <option selected disabled>Course</option>
+        {% for course in all_courses %}
+        <option>{{course["course_code"]}}</option>
+        {% endfor %}
+    </select>
+    </div>
+    <div class="sbmtBtn">
+        <button class="btn btn-primary" type="submit">Delete Course</button>
+    </div>
+</form>
+<div>
+    <a class="sbmtBtn" href="/">
+        <button class="btn btn-primary">Calculate</button>
+    </a>
+</div>
+{% endblock %}

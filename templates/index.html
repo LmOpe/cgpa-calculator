@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+CGPA Calculator
+{% endblock %}
+
+{% block main %}
+<div>
+    <table class="table table-striped">
+        <tbody class="results">
+            {% block body %}
+            {% for result in results %}
+            <tr class="result-heading {{result[0]['session']}}">
+                <th colspan="7">Results for {{result[0]["session"]}} Session</th>
+            </tr>
+            <tr data-session={{result[0]['session']}} class="inactive">
+                <th>Course Code</th>
+                <th>Credit Unit</th>
+                <th>Letter Grade</th>
+                <th>Grade Point</th>
+                <th>Quality Point</th>
+                <th>Semester</th>
+                <th>Session</th>
+            </tr>
+            {% for course in result %}
+            <tr data-session={{result[0]['session']}} class="inactive">
+                <td>{{course["course_code"]}}</td>
+                <td>{{course["credit_unit"]}}</td>
+                <td>{{course["letter_grade"]}}</td>
+                <td>{{course["grade_point"]}}</td>
+                <td>{{course["quality_point"]}}</td>
+                <td>{{course["semester"]}}</td>
+                <td>{{course["session"]}}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+            {% endblock %}
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Session</th>
+                <th>Total Quality Points</th>
+                <th>Total Credit Units</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(length) %}
+            <tr>
+                <td>{{sessions[i]["session"]}}</td>
+                <td>{{quality_points[i]}}</td>
+                <td>{{credit_units[i]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<p class="cgpa" id="cgpa">Your CGPA is <b>{{cgpa}}</b><small>{% if cgpa >= 3.5 %} Keep it up!! {% else %} Put in more
+        effort {% endif %}</small></p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div class="mb-3">
+        Already a member? <a class="register" href="/login">Log in</a>
+    </div>
+    <form action="/register" method="post">
+        <div class="mb-3">
+            <input class="form-control mx-auto auth rounded-pill" type="text" name="username" autocomplete="off" placeholder="Username">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto auth rounded-pill" type="password" name="password" autocomplete="off" placeholder="Password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto auth rounded-pill" type="password" name="confirmation" autocomplete="off" placeholder="Confirm Password">
+        </div>
+            <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+{% endblock %}
