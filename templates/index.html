@@ -10,10 +10,10 @@ CGPA Calculator
         <tbody class="results">
             {% block body %}
             {% for result in results %}
-            <tr class="result-heading {{result[0]['session']}}">
-                <th colspan="7">Results for {{result[0]["session"]}} Session</th>
+            <tr class="result-heading {{result[0][8]}} font-lexend">
+                <th colspan="7">Show Results for {{result[0][8]}} Session</th>
             </tr>
-            <tr data-session={{result[0]['session']}} class="inactive">
+            <tr data-session={{result[0][8]}} class="font-inter font-large inactive">
                 <th>Course Code</th>
                 <th>Credit Unit</th>
                 <th>Letter Grade</th>
@@ -23,14 +23,14 @@ CGPA Calculator
                 <th>Session</th>
             </tr>
             {% for course in result %}
-            <tr data-session={{result[0]['session']}} class="inactive">
-                <td>{{course["course_code"]}}</td>
-                <td>{{course["credit_unit"]}}</td>
-                <td>{{course["letter_grade"]}}</td>
-                <td>{{course["grade_point"]}}</td>
-                <td>{{course["quality_point"]}}</td>
-                <td>{{course["semester"]}}</td>
-                <td>{{course["session"]}}</td>
+            <tr data-session={{result[0][8]}} class="font-inter inactive">
+                <td>{{course[2]}}</td>
+                <td>{{course[3]}}</td>
+                <td>{{course[4]}}</td>
+                <td>{{course[5]}}</td>
+                <td>{{course[6]}}</td>
+                <td>{{course[7]}}</td>
+                <td>{{course[8]}}</td>
             </tr>
             {% endfor %}
             {% endfor %}
@@ -39,7 +39,7 @@ CGPA Calculator
     </table>
     <table class="table table-striped">
         <thead>
-            <tr>
+            <tr class="font-inter font-large">
                 <th>Session</th>
                 <th>Total Quality Points</th>
                 <th>Total Credit Units</th>
@@ -47,8 +47,8 @@ CGPA Calculator
         </thead>
         <tbody>
             {% for i in range(length) %}
-            <tr>
-                <td>{{sessions[i]["session"]}}</td>
+            <tr class="font-inter">
+                <td>{{sessions[i][0]}}</td>
                 <td>{{quality_points[i]}}</td>
                 <td>{{credit_units[i]}}</td>
             </tr>
@@ -56,6 +56,6 @@ CGPA Calculator
         </tbody>
     </table>
 </div>
-<p class="cgpa" id="cgpa">Your CGPA is <b>{{cgpa}}</b><small>{% if cgpa >= 3.5 %} Keep it up!! {% else %} Put in more
+<p class="cgpa font-lexend" id="cgpa">Your CGPA is <b>{{cgpa}}</b><small>{% if cgpa >= 3.5 %} Keep it up!! {% else %} Put in more
         effort {% endif %}</small></p>
 {% endblock %}

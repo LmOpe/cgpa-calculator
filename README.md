@@ -63,7 +63,7 @@ So this app is built with flask, a web programming microframework of Python prog
 
 ### Features to be added
 - Password recovery. That is user should be able to reset their password if forgotten
-- Inclusion of email is registration credential
+- Inclusion of email as registration credential
 - Email confirmation 
 - Listing the courses added per semester and per session
 - Support for other grading systems

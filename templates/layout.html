@@ -21,9 +21,9 @@
 <body>
     <nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><span class="blue">C</span><span class="red">G</span><span
+            <a class="navbar-brand font-lexend" href="/"><span class="blue">C</span><span class="red">G</span><span
                     class="yellow">P</span><span class="green">A</span> <span class="red">Calculator</span></a>
-            <div class="mb-1" id="navbar">
+            <div class="font-cardo mb-1" id="navbar">
                 {% if session["user_id"] %}
                 <ul class="navbar-nav ms-auto mt-1">
                     <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
@@ -36,22 +36,33 @@
             </div>
         </div>
     </nav>
+    <div class="notice inactive">
+        <div class="font-lexend cancel"><span>x</span></div>
+        <div class="font-cardo message">
+            Please note that the calculation is based on five points grading system.
+            And it uses the method adopted by the University of Ilorin.
+        </div>
+    </div>
 
-    <main class="container-fluid py-5 text-center">
-        {% if get_flashed_messages() %}
+    <main class="font-lexend container-fluid text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
         <header>
-            <div class="alert alert-primary mb-0 text-center" role="alert">
-                {{ get_flashed_messages() | join(" ") }}
+            {% for category, message in messages %}
+            <div class="alert {{ category }} mb-0 text-center" role="alert">
+                {{ message }}
             </div>
+            {% endfor %}
         </header>
         {% endif %}
+        {% endwith %}
         <section>
             {% block main %}{% endblock %}
         </section>
     </main>
 </body>
 
-<footer class="mb-0 small text-center">
+<footer class="font-inter mb-0 small text-center">
     {% if session["user_id"] %}
     <nav role="navigation" id="icon" class="footer-icons">
         <a href="/">
@@ -92,13 +103,15 @@
         </a>
     </nav>
     {% else %}
-    <div>Made with <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill"
-            viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-        </svg> by LmOpe Solutions
+    <div><span>Made with <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="purple"
+                class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+            </svg> by</span><span class="ref">LmOpe Solutions</span>
     </div>
     {% endif %}
 </footer>
 
 <script src="../static/app.js"></script>
+
 </html>

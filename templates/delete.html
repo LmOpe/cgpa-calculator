@@ -9,7 +9,7 @@ Delete Course
     <select class="session" name="course_Code">
         <option selected disabled>Course</option>
         {% for course in all_courses %}
-        <option>{{course["course_code"]}}</option>
+        <option>{{course[0]}}</option>
         {% endfor %}
     </select>
     </div>

@@ -6,9 +6,9 @@ Add Course
 
 {% block main %}
 <form action="/add" method="post">
-    <input class="add" type="text" name="course_Code" autocomplete="off" placeholder="Course code">
-    <input class="add" type="text" name="credit_unit" autocomplete="off" placeholder="Credit unit">
-    <input class="add" type="text" name="letter_grade" autocomplete="off" placeholder="Letter grade">
+    <input class="add" type="text" {% if course_code %} value="{{ course_code }}" {% endif %} name="course_Code" autocomplete="off" placeholder="Course code">
+    <input class="add" type="text" {% if credit_unit %} value="{{ credit_unit }}" {% endif %} name="credit_unit" autocomplete="off" placeholder="Credit unit">
+    <input class="add" type="text" {% if letter_grade %} value="{{ letter_grade }}" {% endif %} name="letter_grade" autocomplete="off" placeholder="Letter grade">
     <div>
         <select class="session" name="session">
             <option selected disabled>Session</option>
