@@ -29,6 +29,44 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+semesters = {"Harmattan", "Rain"}
+year = datetime.today().year
+sessions = list(range(year, year - 49, -1))
+
+def get_courses():
+    # Get list of user's courses
+    cur.execute("SELECT course_code FROM courses WHERE user_id = %s", (id,))
+    all_courses = cur.fetchall()
+    return all_courses
+
+def get_user_data(request):
+    course_code = request.form.get("course_Code").upper()
+    credit_unit = request.form.get("credit_unit")
+    check = credit_unit.isdecimal()
+    letter_grade = request.form.get("letter_grade").upper()
+    exam_session = request.form.get("session")
+    semester = request.form.get("semester")
+
+    return course_code, credit_unit, check, letter_grade, exam_session, semester
+
+
+def get_grade_point(letter_grade):
+    # Assign grade point to each letter grade
+    if letter_grade == 'A':
+        grade_point = 5
+    elif letter_grade == 'B':
+        grade_point = 4
+    elif letter_grade == 'C':
+        grade_point = 3
+    elif letter_grade == 'D':
+        grade_point = 2
+    elif letter_grade == 'E':
+        grade_point = 1
+    else:
+        grade_point = 0
+
+    return grade_point
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -41,12 +79,9 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
+    id = session["user_id"]
     cur, conn = connect()
     """Show Courses informations"""
-    id = session["user_id"]
-    semesters = {"Harmattan", "Rain"}
-    year = datetime.today().year
-    sessions = list(range(year, year - 49, -1))
 
     # Calculate CGPA
     cur.execute("SELECT SUM(quality_point) / SUM(credit_unit) FROM courses WHERE user_id = %s", (id,))
@@ -113,6 +148,7 @@ def index():
 @app.route("/add", methods=["GET", "POST"])
 @login_required
 def add():
+    id = session["user_id"]
     cur, conn = connect()
     """Add Course"""
     semesters = {"Harmattan", "Rain"}
@@ -122,12 +158,7 @@ def add():
         id = session["user_id"]
 
         # Get data from user
-        course_code = request.form.get("course_Code").upper()
-        credit_unit = request.form.get("credit_unit")
-        check = credit_unit.isdecimal()
-        letter_grade = request.form.get("letter_grade").upper()
-        exam_session = request.form.get("session")
-        semester = request.form.get("semester")
+        course_code, credit_unit, check, letter_grade, exam_session, semester = get_user_data(request)
 
         # Form Validation
         if not course_code or not credit_unit or not letter_grade or not exam_session or not semester:
@@ -153,21 +184,7 @@ def add():
         
         credit_unit = float(credit_unit)
 
-        grade_point = 0
-
-        # Assign grade point to each letter grade
-        if letter_grade == 'A':
-            grade_point = 5
-        elif letter_grade == 'B':
-            grade_point = 4
-        elif letter_grade == 'C':
-            grade_point = 3
-        elif letter_grade == 'D':
-            grade_point = 2
-        elif letter_grade == 'E':
-            grade_point = 1
-        else:
-            grade_point = 0
+        grade_point = get_grade_point(letter_grade)
 
         # Calculate the quality point for the course
         quality_point = credit_unit * grade_point
@@ -192,26 +209,16 @@ def add():
 @app.route("/edit", methods=["GET", "POST"])
 @login_required
 def edit():
-    cur, conn = connect()
-    """Add Course"""
-    semesters = {"Harmattan", "Rain"}
-    year = datetime.today().year
-    sessions = list(range(year, year - 49, -1))
     id = session["user_id"]
-
+    cur, conn = connect()
+    """Edit Course"""
     # Get list of user's courses
-    cur.execute("SELECT course_code FROM courses WHERE user_id = %s", (id,))
-    all_courses = cur.fetchall()
+    all_courses = get_courses()
 
     if request.method == "POST":
         
         # Get data from user
-        course_code = request.form.get("course_Code")
-        credit_unit = request.form.get("credit_unit")
-        check = credit_unit.isdecimal()
-        letter_grade = request.form.get("letter_grade").upper()
-        exam_session = request.form.get("session")
-        semester = request.form.get("semester")
+        course_code, credit_unit, check, letter_grade, exam_session, semester = get_user_data(request)
 
         # Form Validation
         if not course_code or not credit_unit or not letter_grade or not exam_session or not semester:
@@ -243,21 +250,7 @@ def edit():
         
         credit_unit = float(credit_unit)
 
-        grade_point = 0
-
-        # Assign grade point to each letter grade
-        if letter_grade == 'A':
-            grade_point = 5
-        elif letter_grade == 'B':
-            grade_point = 4
-        elif letter_grade == 'C':
-            grade_point = 3
-        elif letter_grade == 'D':
-            grade_point = 2
-        elif letter_grade == 'E':
-            grade_point = 1
-        else:
-            grade_point = 0
+        grade_point = get_grade_point(letter_grade)
 
         # Calculate the quality point for the course
         quality_point = credit_unit * grade_point
@@ -282,14 +275,12 @@ def edit():
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
+    id = session["user_id"]
     cur, conn = connect()
     """Delete course"""
 
-    id = session["user_id"]
-
     # Get list of user's courses
-    cur.execute("SELECT course_code FROM courses WHERE user_id = %s", (id,))
-    all_courses = cur.fetchall()
+    all_courses = get_courses()
 
     if request.method == "POST":
 
