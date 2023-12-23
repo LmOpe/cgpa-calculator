@@ -6,7 +6,7 @@ body {
   background-color: #1b3764;
   color: #fff;
   display: flex;
-  gap: 154px;
+  justify-content: space-between;
   height: 100vh;
   flex-direction: column;
   position: relative;
@@ -378,6 +378,10 @@ footer :not(.bi) .ref {
     top: 4rem;
     width: 90%;
     left: 5%;
+  }
+
+  body {
+    gap: 154px;
   }
 
   .center-elem {
