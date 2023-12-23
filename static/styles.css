@@ -6,9 +6,9 @@ body {
   background-color: #1b3764;
   color: #fff;
   display: flex;
+  gap: 154px;
   height: 100vh;
   flex-direction: column;
-  justify-content: space-between;
   position: relative;
   scrollbar-width: none;
 }
@@ -78,10 +78,6 @@ footer {
   bottom: 0;
   position: sticky;
   width: 100%;
-}
-
-main.container-fluid {
-  padding-left: 0;
 }
 
 @keyframes fade {
@@ -382,6 +378,17 @@ footer :not(.bi) .ref {
     top: 4rem;
     width: 90%;
     left: 5%;
+  }
+
+  .center-elem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .w-100 {
+    width: 100%;
   }
 }
 

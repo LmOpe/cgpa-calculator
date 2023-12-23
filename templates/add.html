@@ -5,11 +5,11 @@ Add Course
 {% endblock %}
 
 {% block main %}
-<form action="/add" method="post">
+<form class="center-elem action="/add" method="post">
     <input class="add" type="text" {% if course_code %} value="{{ course_code }}" {% endif %} name="course_Code" autocomplete="off" placeholder="Course code">
     <input class="add" type="text" {% if credit_unit %} value="{{ credit_unit }}" {% endif %} name="credit_unit" autocomplete="off" placeholder="Credit unit">
     <input class="add" type="text" {% if letter_grade %} value="{{ letter_grade }}" {% endif %} name="letter_grade" autocomplete="off" placeholder="Letter grade">
-    <div>
+    <div class="center-elem w-100">
         <select class="session" name="session">
             <option selected disabled>Session</option>
             {% for session in sessions %}
@@ -27,7 +27,7 @@ Add Course
         <button class="btn btn-primary" type="submit">Add Course</button>
     </div>
 </form>
-<div>
+<div class="center-elem">
     <a class="sbmtBtn" href="/">
         <button class="btn btn-primary">Calculate</button>
     </a>
