@@ -77,6 +77,7 @@ body::-webkit-scrollbar {
 footer {
   margin-top: auto;
   position: sticky;
+  bottom: 0;
   width: 100%;
 }
 
@@ -180,6 +181,7 @@ footer :not(.bi) {
 .footer-icons a:hover,
 .footer-icons a:hover svg{
   color: #fff;
+  fill: #fff;
   svg {
     fill: #fff;
   }
@@ -275,6 +277,7 @@ nav .navbar-brand .green {
 table.table.table-striped tr:hover,
 table.table.table-striped tr:hover td {
   background-color: #001a44;
+  color: #fff;
   td {
     color: white;
   }
