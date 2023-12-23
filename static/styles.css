@@ -274,9 +274,9 @@ nav .navbar-brand .green {
 }
 
 table.table.table-striped tr:hover {
-  background-color: #001a44;
+  background-color: #001a44 !important;
   td {
-    color: white;
+    color: white !important;
   }
 }
 
@@ -335,9 +335,8 @@ footer :not(.bi) .ref {
 .font-large {
   font-weight: 700;
 }
-
-.table-striped>tbody>tr:nth-of-type(odd)>* {
-  background-color: #fff;
+tbody.results tr.result-heading ~ tr th {
+  color: #fff;
 }
 
 @media (max-width: 768px) {
