@@ -64,8 +64,7 @@ body::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.notice .cancel span:hover,
-.notice .cancel span:active {
+.notice .cancel span:hover {
   color: #ffffffdc;
 }
 
@@ -135,13 +134,11 @@ table {
 input::placeholder {
   color: #001a44;
 }
-.nav-link:hover,
-.nav-link:active {
+.nav-link:hover {
   background-color: white;
   color: #001a44;
 }
-.btn-primary:hover,
-.btn-primary:active {
+.btn-primary:hover {
   background-color: #001a44;
   color: white;
 }
@@ -181,15 +178,11 @@ footer :not(.bi) {
   height: 24px;
 }
 .footer-icons a:hover,
-.footer-icons a:active{
+.footer-icons a:hover svg{
   color: #fff;
   svg {
     fill: #fff;
   }
-}
-
-.footer-icons a svg:hover {
-    fill: #fff;
 }
 
 .footer-icons svg.bi-pencil-square {
@@ -280,15 +273,11 @@ nav .navbar-brand .green {
 }
 
 table.table.table-striped tr:hover,
-table.table.table-striped tr:active {
+table.table.table-striped tr:hover td {
   background-color: #001a44;
   td {
     color: white;
   }
-}
-
-table.table.table-striped tr td:hover{
-  color: white;
 }
 
 .table > :not(caption) > * > th {
