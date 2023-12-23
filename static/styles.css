@@ -182,9 +182,6 @@ footer :not(.bi) {
 .footer-icons a:hover svg{
   color: #fff;
   fill: #fff;
-  svg {
-    fill: #fff;
-  }
 }
 
 .footer-icons svg.bi-pencil-square {
@@ -278,9 +275,6 @@ table.table.table-striped tr:hover,
 table.table.table-striped tr:hover td {
   background-color: #001a44;
   color: #fff;
-  td {
-    color: white;
-  }
 }
 
 .table > :not(caption) > * > th {
