@@ -64,7 +64,8 @@ body::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.notice .cancel span:hover {
+.notice .cancel span:hover,
+.notice .cancel span:active {
   color: #ffffffdc;
 }
 
@@ -75,7 +76,7 @@ body::-webkit-scrollbar {
 }
 
 footer {
-  bottom: 0;
+  top: 100%;
   position: sticky;
   width: 100%;
 }
@@ -135,11 +136,12 @@ input::placeholder {
   color: #001a44;
 }
 .nav-link:hover,
-.nav-link:focus {
+.nav-link:active {
   background-color: white;
   color: #001a44;
 }
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:active {
   background-color: #001a44;
   color: white;
 }
@@ -179,7 +181,7 @@ footer :not(.bi) {
   height: 24px;
 }
 .footer-icons a:hover,
-.footer-icons a:focus {
+.footer-icons a:active {
   color: #fff;
   svg {
     fill: #fff;
@@ -273,10 +275,11 @@ nav .navbar-brand .green {
   border-radius: 0px 25px 25px 0px;
 }
 
-table.table.table-striped tr:hover {
-  background-color: #001a44 !important;
+table.table.table-striped tr:hover,
+table.table.table-striped tr:active {
+  background-color: #001a44;
   td {
-    color: white !important;
+    color: white;
   }
 }
 
@@ -398,10 +401,6 @@ tbody.results tr.result-heading ~ tr th {
 
   .w-100 {
     width: 100%;
-  }
-
-  footer {
-    position: fixed;
   }
 }
 
