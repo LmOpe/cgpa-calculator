@@ -181,15 +181,15 @@ footer :not(.bi) {
   height: 24px;
 }
 .footer-icons a:hover,
-.footer-icons a:active {
+.footer-icons a:active{
   color: #fff;
   svg {
     fill: #fff;
   }
 }
 
-svg {
-  fill: #fff;
+.footer-icons a svg:active {
+    fill: #fff;
 }
 
 .footer-icons svg.bi-pencil-square {
@@ -285,6 +285,10 @@ table.table.table-striped tr:active {
   td {
     color: white;
   }
+}
+
+table.table.table-striped tr td:active{
+  color: white;
 }
 
 .table > :not(caption) > * > th {
