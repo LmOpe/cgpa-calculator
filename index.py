@@ -1,19 +1,26 @@
-from flask import Flask, flash, redirect, render_template, request, session, url_for
-from flask_session import Session
+from flask import Flask, flash, redirect, render_template, request, session, url_for, make_response
+# from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
+from itsdangerous import URLSafeTimedSerializer
 from datetime import datetime
 import math
 import psycopg2
 import os
+import time
 
 from utils.decorators import logout_required, login_required
 
 # Configure application
 app = Flask(__name__)
+app.secret_key = os.environ.get("cgpaSecret")
+
+
+
+# Initialize the serializer for signed cookies
+serializer = URLSafeTimedSerializer(app.secret_key)
 
 # Setup Postgresql
-
 def connect():
     conn = psycopg2.connect(database="verceldb", 
                         user="default",
@@ -23,17 +30,11 @@ def connect():
     cur = conn.cursor()
     return cur, conn
 
-
-# Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-
 semesters = {"Harmattan", "Rain"}
 year = datetime.today().year
 sessions = list(range(year, year - 49, -1))
 
-def get_courses():
+def get_courses(id):
     # Get list of user's courses
     cur.execute("SELECT course_code FROM courses WHERE user_id = %s", (id,))
     all_courses = cur.fetchall()
@@ -75,6 +76,47 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
+@app.route('/set_cookie')
+def set_cookie():
+    user_id = request.args.get('data')
+    # Set session data
+    session['user_id'] = user_id  # Replace with your user ID or relevant data
+
+    # Serialize session data and sign the cookie
+    serialized_data = serializer.dumps(dict(session))
+    response = make_response('Cookie set')
+    response.set_cookie('session_cookie', value=serialized_data, httponly=True, secure=True)
+    
+    return redirect("/")
+
+# Variable to store last activity time
+last_activity_time = 0
+
+# Function to check and reset session timeout
+@app.before_request
+def check_session_timeout():
+    global last_activity_time
+    if 'user_id' in session:
+        # Get the last activity time from the session
+        if last_activity_time == 0:
+            last_activity_time = time.time()
+        else:
+            # Calculate the time elapsed since the last activity
+            elapsed_time = time.time() - last_activity_time
+            # Check if the elapsed time exceeds 5 minutes (300 seconds)
+            if elapsed_time > 3600:
+                # Clear the session and log the user out
+                session.clear()
+                return redirect(url_for('logout'))
+        last_activity_time = time.time()
+
+
+@app.before_request
+def update_last_activity():
+    global last_activity_time
+    if 'user_id' in session:
+        last_activity_time = time.time()
 
 @app.route("/")
 @login_required
@@ -155,8 +197,6 @@ def add():
     year = datetime.today().year
     sessions = list(range(year, year - 49, -1))
     if request.method == "POST":
-        id = session["user_id"]
-
         # Get data from user
         course_code, credit_unit, check, letter_grade, exam_session, semester = get_user_data(request)
 
@@ -280,7 +320,7 @@ def delete():
     """Delete course"""
 
     # Get list of user's courses
-    all_courses = get_courses()
+    all_courses = get_courses(id)
 
     if request.method == "POST":
 
@@ -321,6 +361,10 @@ def login():
     # Forget any user_id
     session.clear()
 
+    # Create a response to clear the cookie
+    response = make_response('Logged out')
+    response.set_cookie('session_cookie', '', expires=0)
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -342,16 +386,13 @@ def login():
         if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
             flash("Invalid Username or password", "error")
             return render_template("/login.html"), 400
-
-        # Remember which user has logged in
-        session["user_id"] = rows[0][0]
-
-        # Redirect user to home page
         
         # close the cursor and connection 
         cur.close() 
         conn.close()
-        return redirect("/")
+
+        # Redirect to set cookies
+        return redirect(url_for('set_cookie', data=rows[0][0]))
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -416,6 +457,10 @@ def logout():
 
     # Forget any user_id
     session.clear()
+
+    # Create a response to clear the cookie
+    response = make_response('Logged out')
+    response.set_cookie('session_cookie', '', expires=0) 
     
     # Redirect user to login form
-    return redirect("/")
+    return redirect("/login")
