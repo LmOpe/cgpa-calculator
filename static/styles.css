@@ -178,7 +178,8 @@ footer :not(.bi) {
   width: 24px;
   height: 24px;
 }
-.footer-icons a:hover {
+.footer-icons a:hover,
+.footer-icons a:focus {
   color: #fff;
   svg {
     fill: #fff;
@@ -335,6 +336,10 @@ footer :not(.bi) .ref {
   font-weight: 700;
 }
 
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+  background-color: #fff;
+}
+
 @media (max-width: 768px) {
   .add,
   .session,
@@ -382,6 +387,7 @@ footer :not(.bi) .ref {
 
   body {
     gap: 154px;
+    justify-content: unset;
   }
 
   .center-elem {
@@ -393,6 +399,10 @@ footer :not(.bi) .ref {
 
   .w-100 {
     width: 100%;
+  }
+
+  footer {
+    position: fixed;
   }
 }
 

@@ -5,7 +5,7 @@ Delete Course
 {% endblock %}
 
 {% block main %}
-<form action="/delete" method="post">
+<form class="center-elem" action="/delete" method="post">
     <select class="session" name="course_Code">
         <option selected disabled>Course</option>
         {% for course in all_courses %}
@@ -17,7 +17,7 @@ Delete Course
         <button class="btn btn-primary" type="submit">Delete Course</button>
     </div>
 </form>
-<div>
+<div class="center-elem">
     <a class="sbmtBtn" href="/">
         <button class="btn btn-primary">Calculate</button>
     </a>
