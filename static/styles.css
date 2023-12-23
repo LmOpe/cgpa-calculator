@@ -80,6 +80,10 @@ footer {
   width: 100%;
 }
 
+main.container-fluid {
+  padding-left: 0;
+}
+
 @keyframes fade {
   0% {
     opacity: 1;

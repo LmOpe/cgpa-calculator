@@ -34,7 +34,7 @@ semesters = {"Harmattan", "Rain"}
 year = datetime.today().year
 sessions = list(range(year, year - 49, -1))
 
-def get_courses(id):
+def get_courses(id, cur):
     # Get list of user's courses
     cur.execute("SELECT course_code FROM courses WHERE user_id = %s", (id,))
     all_courses = cur.fetchall()
@@ -253,7 +253,7 @@ def edit():
     cur, conn = connect()
     """Edit Course"""
     # Get list of user's courses
-    all_courses = get_courses()
+    all_courses = get_courses(id, cur)
 
     if request.method == "POST":
         
@@ -320,7 +320,7 @@ def delete():
     """Delete course"""
 
     # Get list of user's courses
-    all_courses = get_courses(id)
+    all_courses = get_courses(id, cur)
 
     if request.method == "POST":
 
