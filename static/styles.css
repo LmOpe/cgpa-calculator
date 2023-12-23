@@ -179,7 +179,7 @@ footer :not(.bi) {
   height: 24px;
 }
 .footer-icons a:hover,
-.footer-icons a:hover svg{
+.footer-icons a:hover svg {
   color: #fff;
   fill: #fff;
 }
@@ -334,6 +334,11 @@ footer :not(.bi) .ref {
 }
 tbody.results tr.result-heading ~ tr th {
   color: #fff;
+}
+
+.session option:not(:first-of-type) {
+  background-color: #537fbe;
+  color: #001a44;
 }
 
 @media (max-width: 768px) {
